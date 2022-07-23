@@ -1,0 +1,21 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Medicine extends Model
+{
+    use HasFactory;
+    protected $table = 'medicines';
+    protected $primaryKey = 'medic_id';
+    protected $fillable =
+    [
+        'name',
+	    'caliber',
+    	'Type',
+        'manufacture_company',
+        'Composition'
+    ];
+}
