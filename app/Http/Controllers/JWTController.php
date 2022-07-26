@@ -30,7 +30,7 @@ class JWTController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|min:2|max:100',
             'email' => 'required|string|email|max:100|unique:users',
-            'password' => 'required|string|confirmed|min:6',
+            'password' => 'required|string|min:6',
             'role_id' => 'required'
         ]);
 
@@ -42,8 +42,11 @@ class JWTController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
-                'role_id' =>$request->role_id
-
+                'role_id' => $request->role_id,
+                'address' => $request->address,
+                'phone'=> $request->phone,
+                'gender'=> $request->gender,
+                'birth_date'=> $request->birth_date,
             ]);
 
         return response()->json([
@@ -119,6 +122,7 @@ class JWTController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
+            'user' => auth()->user(),
             'expires_in' => auth()->factory()->getTTL() * 60
         ]);
     }
