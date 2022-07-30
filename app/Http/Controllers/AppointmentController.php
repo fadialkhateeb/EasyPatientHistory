@@ -13,8 +13,7 @@ class AppointmentController extends Controller
     use GeneralTrait;
     public function index()
     {
-
-        $Appointments = Appointment::all();
+        $Appointments = Appointment::with('patient')->get();
 
         return $this->returnData( $Appointments);
     }
@@ -58,7 +57,7 @@ class AppointmentController extends Controller
     {
         if (Appointment::where('appoint_id', $id)->exists()) {
             $Appointment = Appointment::find($id);
-            $Appointment->time = is_null($request->time) ? $Appointment->time : $request->time;
+            $Appointment->time = new Carbon(is_null($request->time) ? $Appointment->time : $request->time);
             $Appointment->description = is_null($request->description) ? $Appointment->description : $request->description;
             $Appointment->recep_id = is_null($request->recep_id) ? $Appointment->recep_id : $request->recep_id;
             $Appointment->pat_id = is_null($request->pat_id) ? $Appointment->pat_id : $request->pat_id;

@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Doctor;
+use App\Models\Receptionist;
 use Auth;
 use Validator;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Carbon;
 
 class JWTController extends Controller
 {
@@ -46,9 +49,27 @@ class JWTController extends Controller
                 'address' => $request->address,
                 'phone'=> $request->phone,
                 'gender'=> $request->gender,
-                'birth_date'=> $request->birth_date,
+                'birth_date'=> new Carbon($request->birth_date),
             ]);
 
+        if ($request->role_id == 2) {
+            $d = new Doctor();
+            $d->description = '';
+            $d->user_id = $user->id;
+            $d->specialtyName = '';
+            $d->clinicName = '';
+            $d->clinicAddress = '';
+            $d->clinicPhone = '';
+
+            $d->save();
+        }
+        else if ($request->role_id == 3) {
+            $r = new Receptionist();
+            $r->qualification = '';
+            $r->user_id = $user->id;
+
+            $r->save();
+        }
         return response()->json([
             'message' => 'User successfully registered',
             'user' => $user

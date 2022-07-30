@@ -30,7 +30,6 @@ class ReceptionistController extends Controller
         $Receptionist = new Receptionist;
         $Receptionist->qualification = $request->qualification;
         $Receptionist-> user_id= $request->user_id;
-        $Receptionist->doc_id = $request->doc_id;
 
         $Receptionist->save();
 
@@ -56,7 +55,6 @@ class ReceptionistController extends Controller
             $Receptionist = Receptionist::find($id);
             $Receptionist->qualification = is_null($request->qualification) ? $Receptionist->qualification : $request->qualification;
             $Receptionist->user_id = is_null($request->user_id) ? $Receptionist->user_id : $request->user_id;
-            $Receptionist->doc_id = is_null($request->doc_id) ? $Receptionist->doc_id : $request->doc_id;
             $Receptionist->save();
 
             return $this-> returnSuccesMessage("Receptionist Updated.");

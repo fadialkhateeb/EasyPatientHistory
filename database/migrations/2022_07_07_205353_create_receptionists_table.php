@@ -17,10 +17,8 @@ class CreateReceptionistsTable extends Migration
             $table->id('recep_id');
             $table->string('qualification',500);
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('doc_id');
 
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('doc_id')->references('doc_id')->on('doctors');
 
             $table->timestamps();
         });
