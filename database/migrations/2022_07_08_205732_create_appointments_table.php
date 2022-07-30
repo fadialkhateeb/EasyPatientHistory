@@ -15,15 +15,12 @@ class CreateAppointmentsTable extends Migration
     {
         Schema::create('appointments', function (Blueprint $table) {
             $table->id('appoint_id');
-            $table->dateTime('appoint_time')->nullable(false);
-            $table->enum('state',['canceled','approved']);
+            $table->dateTime('time')->nullable(false);
             $table->text('description');
             $table->unsignedBigInteger('recep_id');
             $table->unsignedBigInteger('pat_id');
-            $table->unsignedBigInteger('doc_id');
             $table->foreign('recep_id')->references('recep_id')->on('receptionists');
             $table->foreign('pat_id')->references('patient_id')->on('patients');
-            $table->foreign('doc_id')->references('doc_id')->on('doctors');
             $table->timestamps();
         });
     }

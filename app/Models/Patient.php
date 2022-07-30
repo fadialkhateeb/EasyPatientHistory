@@ -12,8 +12,16 @@ class Patient extends Model
     protected $primaryKey = 'patient_id';
     protected $fillable =
     [
-        'brief_history',
-        'blood	habit',
-        'user_id'
+        'name',
+        'address',
+        'phone',
+        'gender',
+        'brithDate',
+        'briefHistory',
+        'blood',
+        'habit',
+        'foodAllergy',
+        'drugAllergy',
     ];
+
 }

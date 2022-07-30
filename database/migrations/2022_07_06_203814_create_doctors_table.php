@@ -15,11 +15,13 @@ class CreateDoctorsTable extends Migration
     {
         Schema::create('doctors', function (Blueprint $table) {
             $table->id('doc_id');
-            $table->text('Description');
+            $table->text('description');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('specialty_id');
+            $table->string('specialtyName');
+            $table->string('clinicName');
+            $table->string('clinicAddress');
+            $table->string('clinicPhone');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('specialty_id')->references('Spec_id')->on('specialties');
             $table->timestamps();
         });
     }

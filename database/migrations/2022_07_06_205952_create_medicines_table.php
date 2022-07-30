@@ -17,9 +17,10 @@ class CreateMedicinesTable extends Migration
             $table->id('medic_id');
             $table->string('name')->nullable(false);
             $table->float('caliber');
-            $table->string('Type');
-            $table->string('manufacture_company');
-            $table->string('Composition');
+            $table->string('type');
+            $table->string('manufactureCompany');
+            $table->string('composition');
+            $table->text('description');
             $table->timestamps();
         });
     }

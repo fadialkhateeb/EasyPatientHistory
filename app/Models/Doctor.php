@@ -12,9 +12,12 @@ class Doctor extends Model
     protected $primaryKey = 'doc_id';
     protected $fillable =
     [
-        'Description',
+        'description',
         'user_id',
-        'specialty_id'
+        'specialtyName',
+        'clinicName',
+        'clinicAddress',
+        'clinicPhone'
     ];
     /**
      * Get the user that owns the Doctor
@@ -26,10 +29,6 @@ class Doctor extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function doctorclinic()
-    {
-        return $this->hasMany(clinicDoctor::class);
-    }
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
@@ -40,10 +39,5 @@ class Doctor extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function specialty()
-    {
-        return $this->belongsTo(Specialty::class, 'specialty_id');
-    }
-
 }
 

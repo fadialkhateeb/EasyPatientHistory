@@ -12,12 +12,10 @@ class Appointment extends Model
     protected $primaryKey = 'appoint_id';
     protected $fillable =
     [
-        'appoint_time',
-        'state',
+        'time',
         'description',
         'recep_id',
         'pat_id',
-        'doc_id'
     ];
 
 
@@ -25,13 +23,10 @@ class Appointment extends Model
     {
         return $this->belongsTo(Receptionist::class);
     }
-    public function doctor()
-    {
-        return $this->belongsTo(Doctor::class);
-    }
     public function patient()
     {
         return $this->belongsTo(Patient::class);
     }
+
 
 }

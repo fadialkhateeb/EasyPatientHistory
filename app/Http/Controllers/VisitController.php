@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Visit;
+use App\Models\VisitDiagnosises;
+use App\Models\VisitMedicines;
 use Illuminate\Http\Request;
 use App\Traits\GeneralTrait;
 use Illuminate\Support\Facades\Validator;
@@ -15,16 +17,15 @@ class VisitController extends Controller
 
         $Visits = Visit::all();
 
-        return $this->returnData("Clinics", $Visits,'Request Done');
+        return $this->returnData( $Visits);
     }
 
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'visit_time' => 'required',
+            'time' => 'required',
             'pat_id' => 'required',
-            'doc_id' => 'required',
-            'recep_id' => 'required'
+
         ]);
 
         if($validator->fails()) {
@@ -32,12 +33,28 @@ class VisitController extends Controller
         }
 
         $Visit = new Visit;
-        $Visit->visit_time = $request->visit_time;
-        $Visit-> Description= $request->Description;
+        $Visit->time = $request->time;
+        $Visit->description= $request->description;
         $Visit->pat_id = $request->pat_id;
-        $Visit->doc_id = $request->doc_id;
-        $Visit->recep_id = $request->recep_id;
-        $Visit->save();
+
+        if($Visit->save())
+        {
+
+            if($request->diagn_id)
+            {
+            $VisitDiagn = new VisitDiagnosises;
+            $VisitDiagn->visit_id= $Visit->visit_id;
+            $VisitDiagn->diagn_id = $request->diagn_id;
+            $VisitDiagn->save();
+            }
+            if($request->medic_id)
+            {
+            $VisitMedic = new VisitMedicines;
+            $VisitMedic->visit_id=$Visit->visit_id;
+            $VisitMedic->medic_id = $request->medic_id;
+            $VisitMedic->save();
+            }
+        }
 
         return $this->returnSuccesMessage('Visit Added.');
     }
@@ -55,15 +72,26 @@ class VisitController extends Controller
         }
     }
 
+    public function getPatientVisit($patientId)
+    {
+        $Visit = Visit::where('pat_id',$patientId)->first();
+        if(!empty($Visit))
+        {
+            return $this->returnData($Visit);
+        }
+        else
+        {
+            return $this->returnError(404, 'Visit not found');
+        }
+    }
+
     public function update(Request $request, $id)
     {
         if (Visit::where('visit_id', $id)->exists()) {
             $Visit = Visit::find($id);
-            $Visit->visit_time = is_null($request->visit_time) ? $Visit->visit_time : $request->visit_time;
-            $Visit->Description = is_null($request->Description) ? $Visit->Description : $request->Description;
+            $Visit->time = is_null($request->time) ? $Visit->time : $request->time;
+            $Visit->description = is_null($request->description) ? $Visit->description : $request->description;
             $Visit->pat_id = is_null($request->pat_id) ? $Visit->pat_id : $request->pat_id;
-            $Visit->doc_id = is_null($request->doc_id) ? $Visit->doc_id : $request->doc_id;
-            $Visit->recep_id = is_null($request->recep_id) ? $Visit->recep_id : $request->recep_id;
             $Visit->save();
 
             return $this-> returnSuccesMessage("Visit Updated.");
@@ -74,14 +102,4 @@ class VisitController extends Controller
         }
     }
 
-    public function destroy($id)
-    {
-        if(Visit::where('cli_id', $id)->exists()) {
-            $Visit = Visit::find($id);
-            $Visit->delete();
-            return $this->returnSuccesMessage("records deleted.");
-        } else {
-            return $this->returnError(404, "Visit not found.");
-        }
-    }
 }

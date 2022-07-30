@@ -12,26 +12,14 @@ class Visit extends Model
     protected $primaryKey = 'visit_id';
     protected $fillable =
     [
-    'visit_time',
-    'Description',
+    'time',
+    'description',
 	'pat_id',
-    'doc_id',
-	'recep_id'
     ];
-
-
-    public function doctor()
-    {
-        return $this->belongsTo(Doctor::class);
-    }
 
     public function patient()
     {
         return $this->belongsTo(Patient::class);
-    }
-    public function reception()
-    {
-        return $this->belongsTo(Receptionist::class);
     }
 
 }

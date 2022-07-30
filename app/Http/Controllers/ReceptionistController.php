@@ -28,8 +28,9 @@ class ReceptionistController extends Controller
             return response()->json($validator->errors(), 400);
         }
         $Receptionist = new Receptionist;
-        $Receptionist->Qualification = $request->Qualification;
+        $Receptionist->qualification = $request->qualification;
         $Receptionist-> user_id= $request->user_id;
+        $Receptionist->doc_id = $request->doc_id;
 
         $Receptionist->save();
 
@@ -53,8 +54,9 @@ class ReceptionistController extends Controller
     {
         if (Receptionist::where('recep_id', $id)->exists()) {
             $Receptionist = Receptionist::find($id);
-            $Receptionist->Qualification = is_null($request->Qualification) ? $Receptionist->Qualification : $request->Qualification;
+            $Receptionist->qualification = is_null($request->qualification) ? $Receptionist->qualification : $request->qualification;
             $Receptionist->user_id = is_null($request->user_id) ? $Receptionist->user_id : $request->user_id;
+            $Receptionist->doc_id = is_null($request->doc_id) ? $Receptionist->doc_id : $request->doc_id;
             $Receptionist->save();
 
             return $this-> returnSuccesMessage("Receptionist Updated.");

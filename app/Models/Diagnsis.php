@@ -12,6 +12,6 @@ class Diagnsis extends Model
     protected $primaryKey = 'diagn_id';
     protected $fillable =
     [
-        'diagn_name'
+        'name','description'
     ];
 }

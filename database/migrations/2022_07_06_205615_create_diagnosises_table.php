@@ -15,7 +15,8 @@ class CreateDiagnosisesTable extends Migration
     {
         Schema::create('diagnosises', function (Blueprint $table) {
             $table->id('diagn_id');
-            $table->string('diagn_name')->unique()->nullable(false);
+            $table->string('name')->unique()->nullable(false);
+            $table->text('description');
             $table->timestamps();
         });
     }

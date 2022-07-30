@@ -15,7 +15,6 @@ class CreateVisitMedicinesTable extends Migration
     {
         Schema::create('Visit_medicines', function (Blueprint $table) {
             $table->id();
-            $table->integer('frequency');
             $table->string('note',1000);
             $table->unsignedBigInteger('visit_id');
             $table->unsignedBigInteger('medic_id');

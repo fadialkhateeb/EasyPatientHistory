@@ -15,13 +15,13 @@ class DiagnsisController extends Controller
 
         $Diagnsises = Diagnsis::all();
 
-        return $this->returnData("Diagnsises", $Diagnsises,'Request Done');
+        return $this->returnData($Diagnsises);
     }
 
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'diagn_name' => 'required',
+            'name' => 'required',
         ]);
 
         if($validator->fails()) {
@@ -29,7 +29,8 @@ class DiagnsisController extends Controller
         }
 
         $Diagnsis = new Diagnsis;
-        $Diagnsis->diagn_name = $request->diagn_name;
+        $Diagnsis->name = $request->name;
+        $Diagnsis->description = $request->description;
 
         $Diagnsis->save();
 
@@ -53,7 +54,8 @@ class DiagnsisController extends Controller
     {
         if (Diagnsis::where('diagn_id', $id)->exists()) {
             $Diagnsis = Diagnsis::find($id);
-            $Diagnsis->diagn_name = is_null($request->diagn_name) ? $Diagnsis->diagn_name : $request->diagn_name;
+            $Diagnsis->name = is_null($request->name) ? $Diagnsis->name : $request->name;
+            $Diagnsis->description = is_null($request->description) ? $Diagnsis->description : $request->description;
             $Diagnsis->save();
 
             return $this-> returnSuccesMessage("Diagnsis Updated.");

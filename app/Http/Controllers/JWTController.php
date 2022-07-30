@@ -17,7 +17,7 @@ class JWTController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register', 'profileById']]);
     }
 
     /**
@@ -109,6 +109,12 @@ class JWTController extends Controller
     {
         return response()->json(auth()->user());
     }
+
+    public function profileById($user_id)
+    {
+        return response()->json(User::where('id', $user_id)->with('receptionist', 'doctor', 'role')->first());
+    }
+
 
     /**
      * Get the token array structure.

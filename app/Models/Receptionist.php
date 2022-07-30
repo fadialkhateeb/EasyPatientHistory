@@ -13,8 +13,8 @@ class Receptionist extends Model
     protected $primaryKey = 'recep_id';
     protected $fillable =
     [
-        'Qualification',
-        'user_id'
+        'qualification',
+        'user_id',
     ];
 
     /**
@@ -25,5 +25,9 @@ class Receptionist extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    public function doctor()
+    {
+        return $this->belongsTo(Doctor::class);
     }
 }

@@ -77,15 +77,21 @@ class User extends Authenticatable implements JWTSubject
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function Doctor()
+    public function doctor()
     {
         return $this->hasOne(Doctor::class);
     }
 
-    public function Patient()
+    public function patient()
     {
         return $this->hasOne(Patient::class);
     }
+
+    public function receptionist()
+    {
+        return $this->hasOne(Receptionist::class);
+    }
+
     public function role()
     {
         return $this->belongsTo(Role::class);

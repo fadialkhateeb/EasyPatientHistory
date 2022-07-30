@@ -33,23 +33,9 @@ Route::group(['middleware' => 'api'], function($router) {
     Route::post('/logout', [JWTController::class, 'logout']);
     Route::post('/refresh', [JWTController::class, 'refresh']);
     Route::post('/profile', [JWTController::class, 'profile']);
+    Route::get('/profileById/{user_id}', [JWTController::class, 'profileById']);
 });
 
-Route::group(['middleware' => 'apiAuth'],function(){
-Route::get('/Clinics',[ClinicController::class, 'index']);
-Route::get('/Clinics/{id}',[ClinicController::class, 'show']);
-Route::post('/Clinics',[ClinicController::class, 'store']);
-Route::put('/Clinics/{id}',[ClinicController::class, 'update']);
-Route::delete('/Clinics/{id}',[ClinicController::class, 'destroy']);
-});
-
-
-
-Route::get('/specialties',[SpecialtyController::class, 'index']);
-Route::get('/specialties/{id}',[SpecialtyController::class, 'show']);
-Route::post('/specialties',[SpecialtyController::class, 'store']);
-Route::put('/specialties/{id}',[SpecialtyController::class, 'update']);
-Route::delete('/specialties/{id}',[SpecialtyController::class, 'destroy']);
 
 Route::get('/Doctors',[DoctorController::class, 'index']);
 Route::get('/Doctors/{id}',[DoctorController::class, 'show']);
@@ -57,8 +43,6 @@ Route::post('/Doctors',[DoctorController::class, 'store']);
 Route::put('/Doctors/{id}',[DoctorController::class, 'update']);
 Route::delete('/Doctors/{id}',[DoctorController::class, 'destroy']);
 
-Route::get('/DoctorsClinic',[DoctorClinicController::class, 'index']);
-Route::post('/DoctorsClinic',[DoctorClinicController::class, 'store']);
 
 Route::get('/receptionists',[ReceptionistController::class, 'index']);
 Route::get('/receptionists/{id}',[ReceptionistController::class, 'show']);
@@ -71,6 +55,8 @@ Route::get('/Patients/{id}',[PatientController::class, 'show']);
 Route::post('/Patients',[PatientController::class, 'store']);
 Route::put('/Patients/{id}',[PatientController::class, 'update']);
 Route::delete('/Patients/{id}',[PatientController::class, 'destroy']);
+Route::get('/getPatientName',[PatientController::class, 'getPatientName']);
+Route::get('/getPatient/{id}',[PatientController::class, 'getPatient']);
 
 Route::get('/Appointments',[AppointmentController::class, 'index']);
 Route::get('/Appointments/{id}',[AppointmentController::class, 'show']);
@@ -94,4 +80,5 @@ Route::get('/Visits',[VisitController::class, 'index']);
 Route::get('/Visits/{id}',[VisitController::class, 'show']);
 Route::post('/Visits',[VisitController::class, 'store']);
 Route::put('/Visits/{id}',[VisitController::class, 'update']);
-Route::delete('/Visits/{id}',[VisitController::class, 'destroy']);
+Route::get('/getPatientVisit/{id}',[VisitController::class, 'getPatientVisit']);
+

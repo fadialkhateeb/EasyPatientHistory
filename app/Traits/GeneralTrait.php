@@ -18,14 +18,11 @@ trait GeneralTrait
         return ['status' => true,'errNum' =>$errnum, 'message' => $msg];
     }
 
-    public function returnData($KEY, $value,$msg =" ")
+    public function returnData( $value)
     {
         return response()->json([
-            'status' => true,
-            'errNum' => "S000",
-            'msg' => $msg,
-            $KEY => $value
-            ]);
+            'data' => $value
+        ]);
     }
 
 

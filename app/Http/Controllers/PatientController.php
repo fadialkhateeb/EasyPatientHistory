@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Traits\GeneralTrait;
 use App\Models\Patient;
+use App\Models\User;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
+
 class PatientController extends Controller
 {
     use GeneralTrait;
@@ -14,23 +17,32 @@ class PatientController extends Controller
 
         $Patients = Patient::all();
 
-        return $this->returnData("Patients", $Patients,'Request Done');
+        return $this->returnData( $Patients);
     }
 
     public function store(Request $request)
     {
+
         $validator = Validator::make($request->all(), [
-            'user_id' => 'required',
+            'name' => 'required',
+            'phone'=> 'required'
         ]);
 
         if($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
+
         $Patient = new Patient;
-        $Patient->brief_history = $request->brief_history;
+        $Patient->name = $request->name;
+        $Patient->address = $request->address;
+        $Patient->phone = $request->phone;
+        $Patient->gender = $request->gender;
+        $Patient->brithDate =  new Carbon($request->birthDate);
+        $Patient->briefHistory = $request->briefHistory;
         $Patient->blood= $request->blood;
         $Patient->habit = $request->habit;
-        $Patient->user_id = $request->user_id;
+        $Patient->foodAllergy = $request->foodAllergy;
+        $Patient->drugAllergy = $request->drugAllergy;
         $Patient->save();
 
         return $this->returnSuccesMessage('Patient Added.');
@@ -41,7 +53,7 @@ class PatientController extends Controller
         $Patient = Patient::find($id);
         if(!empty($Patient))
         {
-            return $this->returnData('Patient', $Patient,'Request Done');
+            return $this->returnData($Patient);
         }
         else
         {
@@ -53,10 +65,16 @@ class PatientController extends Controller
     {
         if (Patient::where('patient_id	', $id)->exists()) {
             $Patient = Patient::find($id);
-            $Patient->brief_history = is_null($request->brief_history) ? $Patient->brief_history : $request->brief_history;
+            $Patient->name = is_null($request->name) ? $Patient->name :$request->name;
+            $Patient->address = is_null($request->address) ? $Patient->address :$request->address;
+            $Patient->phone = is_null($request->phone) ? $Patient->phone :$request->phone;
+            $Patient->gender = is_null($request->gender) ? $Patient->gender :$request->gender;
+            $Patient->brithDate = is_null($request->brithDate) ?  $Patient->brithDate :$request->brithDate;
+            $Patient->briefHistory = is_null($request->briefHistory) ? $Patient->briefHistory : $request->briefHistory;
             $Patient->blood = is_null($request->blood) ? $Patient->blood : $request->blood;
             $Patient->habit = is_null($request->habit) ? $Patient->habit : $request->habit;
-            $Patient->user_id = is_null($request->user_id) ? $Patient->user_id : $request->user_id;
+            $Patient->foodAllergy = is_null($request->foodAllergy) ? $Patient->foodAllergy : $request->foodAllergy;
+            $Patient->drugAllergy = is_null($request->drugAllergy) ? $Patient->drugAllergy : $request->drugAllergy;
             $Patient->save();
 
             return $this-> returnSuccesMessage("Patient Updated.");

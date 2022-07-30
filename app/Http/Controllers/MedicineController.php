@@ -12,9 +12,9 @@ class MedicineController extends Controller
     public function index()
     {
 
-        $Medicines = Medicine::all();
+        $Medicines = Medicine::select('medic_id','name','caliber','type','manufactureCompany','composition','description')->get();
 
-        return $this->returnData("Medicines", $Medicines,'Request Done');
+        return $this->returnData( $Medicines);
     }
 
     public function store(Request $request)
@@ -22,9 +22,9 @@ class MedicineController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'caliber' => 'required',
-            'Type' => 'required',
-            'manufacture_company' => 'required',
-            'Composition' => 'required'
+            'type' => 'required',
+            'manufactureCompany' => 'required',
+            'composition' => 'required'
         ]);
 
         if($validator->fails()) {
@@ -35,9 +35,10 @@ class MedicineController extends Controller
         $Medicine = new Medicine;
         $Medicine->name = $request->name;
         $Medicine->caliber= $request->caliber;
-        $Medicine->Type = $request->Type;
-        $Medicine->manufacture_company = $request->manufacture_company;
-        $Medicine->Composition = $request->Composition;
+        $Medicine->type = $request->type;
+        $Medicine->manufactureCompany = $request->manufactureCompany;
+        $Medicine->composition = $request->composition;
+        $Medicine->description = is_null($request->description)? '' :$request->description;
 
         $Medicine->save();
 
@@ -49,7 +50,7 @@ class MedicineController extends Controller
         $Medicine = Medicine::find($id);
         if(!empty($Medicine))
         {
-            return $this->returnData('Medicine', $Medicine,'Request Done');
+            return $this->returnData($Medicine);
         }
         else
         {
@@ -63,9 +64,10 @@ class MedicineController extends Controller
             $Medicine = Medicine::find($id);
             $Medicine->name = is_null($request->name) ? $Medicine->name : $request->name;
             $Medicine->caliber= is_null($request->caliber) ? $Medicine->caliber : $request->caliber;
-            $Medicine->Type = is_null($request->Type) ? $Medicine->Type : $request->Type;
-            $Medicine->manufacture_company = is_null($request->manufacture_company) ? $Medicine->manufacture_company : $request->manufacture_company;
-            $Medicine->Composition= is_null($request->Composition) ? $Medicine->Composition : $request->Composition;
+            $Medicine->type = is_null($request->type) ? $Medicine->type : $request->type;
+            $Medicine->manufactureCompany = is_null($request->manufactureCompany) ? $Medicine->manufactureCompany : $request->manufactureCompany;
+            $Medicine->composition= is_null($request->composition) ? $Medicine->composition : $request->composition;
+            $Medicine->description = is_null($request->description) ? $Medicine->description : $request->description;
             $Medicine->save();
 
             return $this-> returnSuccesMessage("Medicine Updated.");

@@ -15,11 +15,17 @@ class CreatePatientsTable extends Migration
     {
         Schema::create('patients', function (Blueprint $table) {
             $table->id('patient_id');
-            $table->text('brief_history');
-            $table->enum('blood',['A+','B+','AB+','O+','A-','B-','AB-','O-']);
+            $table->string('name');
+            $table->string('address');
+            $table->string('phone');
+            $table->string('gender');
+            $table->date('brithDate')->nullable();
+            $table->text('briefHistory');
+            $table->string('blood',);
             $table->text('habit');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->text('foodAllergy');
+            $table->text('drugAllergy');
+
             $table->timestamps();
         });
     }

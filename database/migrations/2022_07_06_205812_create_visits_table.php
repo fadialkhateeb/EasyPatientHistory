@@ -15,14 +15,10 @@ class CreateVisitsTable extends Migration
     {
         Schema::create('visits', function (Blueprint $table) {
             $table->id('visit_id');
-            $table->dateTime('visit_time')->nullable(false);
-            $table->text('Description');
+            $table->dateTime('time')->nullable(false);
+            $table->text('description');
             $table->unsignedBigInteger('pat_id');
-            $table->unsignedBigInteger('doc_id');
-            $table->unsignedBigInteger('recep_id');
             $table->foreign('pat_id')->references('patient_id')->on('patients');
-            $table->foreign('doc_id')->references('doc_id')->on('doctors');
-            $table->foreign('recep_id')->references('recep_id')->on('receptionists');
             $table->timestamps();
         });
     }

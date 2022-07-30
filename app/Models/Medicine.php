@@ -14,8 +14,9 @@ class Medicine extends Model
     [
         'name',
 	    'caliber',
-    	'Type',
-        'manufacture_company',
-        'Composition'
+    	'type',
+        'manufactureCompany',
+        'composition',
+        'description'
     ];
 }

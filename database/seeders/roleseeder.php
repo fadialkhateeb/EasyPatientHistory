@@ -17,8 +17,7 @@ class roleseeder extends Seeder
         Role::insert([
             ['name' => 'Admin'],
             ['name'=> 'Dcotor'],
-            ['name' => 'Reception'],
-            ['name' => 'Patient']
+            ['name' => 'Reception']
         ]);
     }
 }
